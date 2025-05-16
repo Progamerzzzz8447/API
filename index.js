@@ -16,6 +16,16 @@ app.post('/data', (req, res) => {
   }
 });
 
+app.delete('/data/:index', (req, res) => {
+  const index = parseInt(req.params.index, 10);
+  if (isNaN(index) || index < 0 || index >= storedData.length) {
+    return res.status(400).json({ message: 'Invalid index' });
+  }
+  const removed = storedData.splice(index, 1);
+  res.json({ message: 'Deleted item', removed, data: storedData });
+});
+
+
 app.get('/data', (req, res) => {
   res.json({ data: storedData });
 });
